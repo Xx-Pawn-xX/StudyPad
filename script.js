@@ -373,7 +373,7 @@ function renderSidebar() {
     wrapper.innerHTML = `
       <div class="subject-row" draggable="true">
         <button class="expand-btn">
-          ${expanded ? "â¾" : "â¸"}
+          ${expanded ? "▾" : "▸"}
         </button>
 
         <div class="subject-badge"
@@ -385,7 +385,7 @@ function renderSidebar() {
           ${escapeHTML(subject.name)}
         </span>
 
-        <button class="more-btn subject-more">â¯</button>
+        <button class="more-btn subject-more">⋯</button>
       </div>
 
       ${
@@ -406,7 +406,7 @@ function renderSidebar() {
                   ${escapeHTML(topic.name)}
                 </span>
 
-                <button class="more-btn topic-more">â¯</button>
+                <button class="more-btn topic-more">⋯</button>
               </div>
             `).join("")}
 
@@ -924,7 +924,7 @@ function renderNoteEditor(topic) {
     <div class="note-editor-header">
 
       <button id="backToNotes" class="back-btn">
-        â Back
+        ← Back
       </button>
 
       <input
@@ -937,7 +937,7 @@ function renderNoteEditor(topic) {
     <div class="format-bar">
       <button data-command="bold"><b>B</b></button>
       <button data-command="italic"><i>I</i></button>
-      <button data-command="insertUnorderedList">â¢ List</button>
+      <button data-command="insertUnorderedList">• List</button>
       <button data-command="insertOrderedList">1. List</button>
     </div>
 
@@ -1043,21 +1043,21 @@ function renderHomework() {
                     }"
                     data-complete="${item.id}"
                   >
-                    ${item.completed ? "â Done" : "Complete"}
+                    ${item.completed ? "✓ Done" : "Complete"}
                   </button>
                 </div>
 
                 <div class="card-meta">
                   <span class="meta">
-                    ð ${item.dueDate || "No date"}
+                    📅 ${item.dueDate || "No date"}
                   </span>
 
                   <span class="meta">
-                    â±ï¸ ${item.duration || "No estimate"}
+                  ⏱️ ${item.duration || "No estimate"}
                   </span>
 
                   <span class="meta">
-                    ð© ${item.priority}
+                    🚩 ${item.priority}
                   </span>
                 </div>
 
@@ -1302,21 +1302,21 @@ function renderTests() {
 
                   <div class="card-meta">
                     <span class="meta">
-                      ð ${test.date}
+                      📅 ${test.date}
                     </span>
 
                     ${
                       test.time
                         ? `
                           <span class="meta">
-                            ð ${test.time}
+                            🕐 ${test.time}
                           </span>
                         `
                         : ""
                     }
 
                     <span class="meta">
-                      ð© ${test.priority}
+                      🚩 ${test.priority}
                     </span>
                   </div>
 
@@ -1546,7 +1546,7 @@ function renderStudyPlan() {
 
                 <div class="study-time">
                   ${session.date}<br />
-                  ${session.startTime} â ${session.endTime}
+                  ${session.startTime} – ${session.endTime}
                 </div>
 
                 <div class="study-info">
@@ -1793,7 +1793,7 @@ function renderCalendar() {
     <div class="calendar-toolbar">
 
       <button id="prevWeek" class="calendar-nav-btn">
-        â
+        ←
       </button>
 
       <button id="todayWeek" class="secondary-btn">
@@ -1805,7 +1805,7 @@ function renderCalendar() {
           month: "short",
           day: "numeric"
         })}
-        â
+        –
         ${end.toLocaleDateString(undefined, {
           month: "short",
           day: "numeric",
@@ -1814,7 +1814,7 @@ function renderCalendar() {
       </div>
 
       <button id="nextWeek" class="calendar-nav-btn">
-        â
+        →
       </button>
     </div>
 
@@ -1971,7 +1971,7 @@ function renderCalendarEvents(dates) {
         <strong>${escapeHTML(event.title)}</strong>
         <span>
           ${event.startTime || ""}
-          â
+          –
           ${event.endTime || ""}
         </span>
       `;

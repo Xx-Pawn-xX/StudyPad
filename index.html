@@ -117,26 +117,76 @@
 
     </main>
 
+    <!-- ================= STUDYPAD AI ================= -->
+<aside id="aiPanel" class="ai-panel hidden">
 
-    <!-- RIGHT SIDEBAR PLACEHOLDER -->
-    <aside id="aiPanel" class="ai-panel hidden">
-      <div class="ai-header">
-        <div>
-          <strong>StudyPad</strong>
-          <span>Assistant unavailable in V1</span>
-        </div>
-        <button id="closeAiBtn" class="icon-btn">×</button>
+  <div class="ai-header">
+    <div class="ai-title">
+      <div class="ai-logo">✦</div>
+
+      <div>
+        <strong>StudyPad AI</strong>
+        <span>Powered by AI</span>
+      </div>
+    </div>
+
+    <button id="closeAiBtn" class="icon-btn">×</button>
+  </div>
+
+
+  <div id="aiMessages" class="ai-messages">
+
+    <div class="ai-welcome">
+
+      <div class="ai-big-icon">✦</div>
+
+      <h3>Hey!</h3>
+
+      <p>
+        I'm StudyPad AI. Ask me anything about
+        studying, homework, notes, or school.
+      </p>
+
+      <div class="ai-suggestions">
+
+        <button class="ai-suggestion">
+          Explain this topic simply
+        </button>
+
+        <button class="ai-suggestion">
+          Help me study for a test
+        </button>
+
+        <button class="ai-suggestion">
+          Make me practice questions
+        </button>
+
       </div>
 
-      <div class="ai-coming">
-        <div class="ai-big-icon">✦</div>
-        <h3>StudyPad AI</h3>
-        <p>
-          The AI sidebar is reserved for a future version.
-          For now, all study planning is completely manual.
-        </p>
-      </div>
-    </aside>
+    </div>
+
+  </div>
+
+
+  <div class="ai-input-area">
+
+    <textarea
+      id="aiInput"
+      placeholder="Ask StudyPad AI..."
+      rows="1"
+    ></textarea>
+
+    <button
+      id="sendAiBtn"
+      class="ai-send-btn"
+      title="Send message"
+    >
+      ↑
+    </button>
+
+  </div>
+
+</aside>
 
   </div>
 

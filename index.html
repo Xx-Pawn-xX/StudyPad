@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyPad</title>
+  <link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ================= LOGIN ================= -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-box">
+      <div class="logo-mark">S</div>
+      <h1>StudyPad</h1>
+      <p>Your school workspace.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth="login">Log in</button>
+        <button class="auth-tab" data-auth="signup">Sign up</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <input id="loginUsername" type="text" placeholder="Username" required />
+        <input id="loginPassword" type="password" placeholder="Password" required />
+        <button type="submit" class="primary-btn">Log in</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <input id="signupName" type="text" placeholder="Your name" required />
+        <input id="signupGrade" type="text" placeholder="Grade" required />
+        <input id="signupUsername" type="text" placeholder="Username" required />
+        <input id="signupPassword" type="password" placeholder="Password" required />
+        <button type="submit" class="primary-btn">Create StudyPad</button>
+      </form>
+
+      <p class="auth-note">
+        StudyPad saves automatically on this device.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ================= APP ================= -->
+  <div id="app" class="app hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="small-logo">S</div>
+        <span>StudyPad</span>
+      </div>
+
+      <div class="profile">
+        <div class="profile-avatar" id="profileInitial">H</div>
+        <div>
+          <strong id="profileName">Student</strong>
+          <span id="profileGrade">Grade</span>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section-title">
+        <span>SUBJECTS</span>
+        <button id="addSubjectBtn" class="icon-btn" title="Add subject">+</button>
+      </div>
+
+      <div id="subjectsList" class="subjects-list"></div>
+
+      <div class="sidebar-bottom">
+        <button id="settingsBtn" class="sidebar-action">⚙ Settings</button>
+        <button id="logoutBtn" class="sidebar-action danger-action">↪ Log out</button>
+      </div>
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <header class="topbar">
+        <div class="breadcrumb" id="breadcrumb">
+          Choose a subject and topic
+        </div>
+
+        <nav class="top-nav">
+          <button class="nav-item active" data-section="notes">Notes</button>
+          <button class="nav-item" data-section="homework">Homework</button>
+          <button class="nav-item" data-section="studyplan">Study Plan</button>
+          <button class="nav-item" data-section="calendar">Calendar</button>
+          <button class="nav-item" data-section="tests">Tests</button>
+        </nav>
+
+        <button id="toggleAiBtn" class="ai-toggle">✦</button>
+      </header>
+
+      <section id="content" class="content"></section>
+
+    </main>
+
+
+    <!-- RIGHT SIDEBAR PLACEHOLDER -->
+    <aside id="aiPanel" class="ai-panel hidden">
+      <div class="ai-header">
+        <div>
+          <strong>StudyPad</strong>
+          <span>Assistant unavailable in V1</span>
+        </div>
+        <button id="closeAiBtn" class="icon-btn">×</button>
+      </div>
+
+      <div class="ai-coming">
+        <div class="ai-big-icon">✦</div>
+        <h3>StudyPad AI</h3>
+        <p>
+          The AI sidebar is reserved for a future version.
+          For now, all study planning is completely manual.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+
+
+  <!-- ================= MODAL ================= -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div id="modal" class="modal"></div>
+  </div>
+
+
+  <!-- ================= TOAST ================= -->
+  <div id="toast" class="toast hidden"></div>
+
+<script src="supabase-client.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

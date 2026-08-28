@@ -2228,21 +2228,296 @@ document.getElementById("settingsBtn").onclick = () => {
 
 
 /* =========================
-   AI PANEL PLACEHOLDER
+   STUDYPAD AI
 ========================= */
 
+const aiPanel =
+  document.getElementById("aiPanel");
+
+const aiMessages =
+  document.getElementById("aiMessages");
+
+const aiInput =
+  document.getElementById("aiInput");
+
+const sendAiBtn =
+  document.getElementById("sendAiBtn");
+
+
 document.getElementById("toggleAiBtn").onclick = () => {
-  document
-    .getElementById("aiPanel")
-    .classList.toggle("hidden");
+
+  aiPanel.classList.toggle("hidden");
+
+  if (!aiPanel.classList.contains("hidden")) {
+    setTimeout(() => aiInput.focus(), 100);
+  }
+
 };
+
 
 document.getElementById("closeAiBtn").onclick = () => {
-  document
-    .getElementById("aiPanel")
-    .classList.add("hidden");
+
+  aiPanel.classList.add("hidden");
+
 };
 
+
+/* =========================
+   ADD MESSAGE
+========================= */
+
+function addAiMessage(text, role = "assistant") {
+
+  const welcome =
+    aiMessages.querySelector(".ai-welcome");
+
+  if (welcome) {
+    welcome.remove();
+  }
+
+  const message =
+    document.createElement("div");
+
+  message.className =
+    `ai-message ${role}`;
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "ai-bubble";
+
+  bubble.textContent = text;
+
+  message.appendChild(bubble);
+
+  aiMessages.appendChild(message);
+
+  aiMessages.scrollTop =
+    aiMessages.scrollHeight;
+
+  return message;
+}
+
+
+/* =========================
+   THINKING ANIMATION
+========================= */
+
+function showAiThinking() {
+
+  const thinking =
+    document.createElement("div");
+
+  thinking.className =
+    "ai-message assistant";
+
+  thinking.id =
+    "aiThinking";
+
+  thinking.innerHTML = `
+    <div class="ai-bubble ai-thinking">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  `;
+
+  aiMessages.appendChild(thinking);
+
+  aiMessages.scrollTop =
+    aiMessages.scrollHeight;
+}
+
+
+function removeAiThinking() {
+
+  const thinking =
+    document.getElementById("aiThinking");
+
+  if (thinking) {
+    thinking.remove();
+  }
+
+}
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendAiMessage(customMessage = null) {
+
+  const message =
+    customMessage ||
+    aiInput.value.trim();
+
+  if (!message) return;
+
+
+  addAiMessage(message, "user");
+
+  aiInput.value = "";
+  aiInput.style.height = "auto";
+
+  sendAiBtn.disabled = true;
+
+  showAiThinking();
+
+
+  try {
+
+    const {
+      data,
+      error
+    } = await db.functions.invoke(
+      "study-pad",
+      {
+        body: {
+          message
+        }
+      }
+    );
+
+
+    removeAiThinking();
+
+
+    if (error) {
+      console.error(
+        "StudyPad AI error:",
+        error
+      );
+
+      addAiMessage(
+        "Sorry, I couldn't reach StudyPad AI. Please try again.",
+        "assistant"
+      );
+
+      return;
+    }
+
+
+    if (data?.error) {
+
+      console.error(
+        "StudyPad AI error:",
+        data.error
+      );
+
+      addAiMessage(
+        `Error: ${data.error}`,
+        "assistant"
+      );
+
+      return;
+    }
+
+
+    addAiMessage(
+      data?.answer ||
+      "Sorry, I didn't get a response.",
+      "assistant"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "StudyPad AI unexpected error:",
+      error
+    );
+
+    removeAiThinking();
+
+    addAiMessage(
+      "Something went wrong while talking to StudyPad AI.",
+      "assistant"
+    );
+
+  } finally {
+
+    sendAiBtn.disabled = false;
+
+    aiInput.focus();
+
+  }
+
+}
+
+
+/* =========================
+   SEND BUTTON
+========================= */
+
+sendAiBtn.onclick = () => {
+
+  sendAiMessage();
+
+};
+
+
+/* =========================
+   ENTER TO SEND
+========================= */
+
+aiInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendAiMessage();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   AUTO RESIZE INPUT
+========================= */
+
+aiInput.addEventListener(
+  "input",
+  () => {
+
+    aiInput.style.height = "auto";
+
+    aiInput.style.height =
+      Math.min(
+        aiInput.scrollHeight,
+        130
+      ) + "px";
+
+  }
+);
+
+
+/* =========================
+   SUGGESTION BUTTONS
+========================= */
+
+document
+  .querySelectorAll(".ai-suggestion")
+  .forEach(button => {
+
+    button.onclick = () => {
+
+      const suggestion =
+        button.textContent.trim();
+
+      sendAiMessage(suggestion);
+
+    };
+
+  });
 
 /* =========================
    MODALS
